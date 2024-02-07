@@ -1,5 +1,7 @@
 import Image from 'next/image'
 
+// TODO: quando voltar para componetizar o button, adcionar hover e active
+
 export function Header() {
   return (
     <header className="min-h-[13.25rem] w-full bg-gray-personalized-gray1">
