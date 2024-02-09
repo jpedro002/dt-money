@@ -78,7 +78,7 @@ export default function HomePage() {
         </button>
       </form>
       <table className="max-w-[70rem] mx-auto flex flex-col mt-6 gap-2 ">
-        {Array.from({ length: 10 }, (_, i) => i + 1).map((_, index) => (
+        {Array.from({ length: 0 }, (_, i) => i + 1).map((_, index) => (
           <tr
             key={index}
             className="bg-gray-personalized-gray3 w-full flex gap-2 py-5 px-8

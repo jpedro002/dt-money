@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Modal } from './Modal'
 
 // TODO: quando voltar para componetizar o button, adcionar hover e active
 
@@ -12,12 +13,7 @@ export function Header() {
             DT Money
           </h2>
         </div>
-        <button
-          className="px-5 py-3 text-gray-personalized-white
-        bg-green-default flex-center rounded-lg text-base font-bold"
-        >
-          Nova transação
-        </button>
+        <Modal />
       </div>
     </header>
   )
