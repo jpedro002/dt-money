@@ -2,10 +2,38 @@
 
 import * as Dialog from '@radix-ui/react-Dialog'
 import { ArrowDownCircle, ArrowUpCircle, X } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import clsx from 'clsx'
+import z from 'zod'
 
-// TODO FAZER A LOGICA DO SELECT QUANDO DE MUDAR A COR DO INPUT SELECIONADO
+const createTransactionSchema = z.object({
+  description: z.string().min(1, 'campo obrigatorio'),
+  price: z.string().min(1, 'campo obrigatorio'),
+  category: z.string().min(1, 'campo obrigatorio'),
+  transactionType: z.string().min(1, 'campo obrigatorio'),
+})
+
+// TODO RESET THE FORM AFTER CLOSE AND SUBMIT
+
+type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
 
 export const Modal = () => {
+  const [currentTransaction, setCurrentTransaction] = useState<
+    'entrada' | 'saida' | ''
+  >('')
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewTransactionFormInputs>({
+    resolver: zodResolver(createTransactionSchema),
+  })
+
+  const onSubmit = handleSubmit((data) => console.log(data, errors))
+
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -38,56 +66,123 @@ export const Modal = () => {
           <Dialog.Title className="text-gray-personalized-gray7 mb-8 text-2xl font-bold">
             Nova transação
           </Dialog.Title>
-          <form action="" className="flex flex-col gap-4 mb-6">
-            <input
-              type="text"
-              className="p-4 bg-gray-personalized-gray1 w-full
-              text-gray-personalized-gray5 text-base font-normal rounded-lg     "
-              placeholder="Descrição"
-            />
-            <input
-              type="text"
-              className="p-4 bg-gray-personalized-gray1 w-full
-              text-gray-personalized-gray5 text-base font-normal rounded-lg     "
-              placeholder="Preço"
-            />
-            <input
-              type="text"
-              className="p-4 bg-gray-personalized-gray1 w-full
-            text-gray-personalized-gray5 text-base font-normal rounded-lg     "
-              placeholder="Categoria"
-            />
-          </form>
-          <div className="flex gap-4 mb-10 justify-stretch">
-            <label className="w-full">
-              <input type="radio" value="cartão de débito" className="hidden" />
-
-              <button
-                className="flex-center gap-2 bg-gray-personalized-gray3
-                py-4 px-6 w-full rounded-lg "
-                onClick={() => console.log('oi')}
-              >
-                <ArrowUpCircle className="text-green-light " />
-                <span className="text-base text-gray-personalized-gray6   ">
-                  Entrada
+          <form onSubmit={onSubmit} className="flex flex-col gap-4 ">
+            <div className="flex flex-col space-y-4">
+              <input
+                type="text"
+                className="p-4 bg-gray-personalized-gray1 w-full
+                text-gray-personalized-gray5 text-base font-normal rounded-lg     "
+                placeholder="Descrição"
+                {...register('description')}
+              />
+              {errors.description?.message && (
+                <span className="text-red-500">
+                  {errors.description.message}
                 </span>
-              </button>
-            </label>
-            <label className="w-full">
-              <input type="radio" value="cartão de débito" className="hidden" />
+              )}
+            </div>
+            <div className="flex flex-col space-y-4">
+              <input
+                type="text"
+                className="p-4 bg-gray-personalized-gray1 w-full
+                text-gray-personalized-gray5 text-base font-normal rounded-lg     "
+                placeholder="Preço"
+                {...register('price')}
+              />
+              {errors.price?.message && (
+                <span className="text-red-500">{errors.price.message}</span>
+              )}
+            </div>
+            <div className="flex flex-col ">
+              <input
+                type="text"
+                className="p-4 bg-gray-personalized-gray1 w-full
+              text-gray-personalized-gray5 text-base font-normal rounded-lg     "
+                placeholder="Categoria"
+                {...register('category')}
+              />
+              {errors.category?.message && (
+                <span className="text-red-500">{errors.category.message}</span>
+              )}
+            </div>
+            <div className="flex gap-4 mt-2  mb-6  ">
+              <div className="flex w-full gap-4">
+                <label className=" w-full  ">
+                  <input
+                    type="radio"
+                    value="entrada"
+                    className="hidden"
+                    {...register('transactionType')}
+                  />
+                  <div
+                    className={clsx(
+                      `flex-center gap-2 bg-gray-personalized-gray3  py-4 px-6
+                      w-full rounded-lg`,
+                      currentTransaction === 'entrada'
+                        ? 'bg-green-dark text-white'
+                        : '',
+                    )}
+                    onClick={() => setCurrentTransaction('entrada')}
+                  >
+                    <ArrowUpCircle
+                      className={clsx(
+                        'text-green-light',
+                        currentTransaction === 'entrada' ? 'text-white' : '',
+                      )}
+                    />
+                    <span
+                      className={clsx(
+                        'text-base',
+                        currentTransaction === 'entrada'
+                          ? 'text-white'
+                          : 'text-gray-personalized-gray6',
+                      )}
+                    >
+                      Entrada
+                    </span>
+                  </div>
+                </label>
+                <label className=" w-full  ">
+                  <input
+                    {...register('transactionType')}
+                    type="radio"
+                    value="saida"
+                    className="hidden"
+                  />
+                  <div
+                    className={clsx(
+                      `flex-center gap-2 bg-gray-personalized-gray3  py-4 px-6
+                    w-full rounded-lg`,
+                      currentTransaction === 'saida'
+                        ? 'bg-red-dark text-white'
+                        : '',
+                    )}
+                    onClick={() => setCurrentTransaction('saida')}
+                  >
+                    <ArrowDownCircle
+                      className={clsx(
+                        'text-red-dark',
+                        currentTransaction === 'saida' ? 'text-white' : '',
+                      )}
+                    />
+                    <span
+                      className={clsx(
+                        'text-base',
+                        currentTransaction === 'saida'
+                          ? 'text-white'
+                          : 'text-gray-personalized-gray6',
+                      )}
+                    >
+                      Saída
+                    </span>
+                  </div>
+                </label>
+              </div>
+              {errors.category?.message && (
+                <span className="text-red-500">campo obrigatorio</span>
+              )}
+            </div>
 
-              <button
-                className="flex-center gap-2 bg-gray-personalized-gray3
-              py-4 px-6 w-full rounded-lg "
-              >
-                <ArrowDownCircle className="text-red-dark" />
-                <span className="text-base text-gray-personalized-gray6   ">
-                  Saída
-                </span>
-              </button>
-            </label>
-          </div>
-          <Dialog.Close asChild>
             <button
               className="bg-green-default flex-center leading-none
             focus:shadow-[0_0_0_2px] focus:outline-none  w-full px-8 py-4
@@ -96,7 +191,8 @@ export const Modal = () => {
             >
               Cadastrar
             </button>
-          </Dialog.Close>
+            <Dialog.Close asChild></Dialog.Close>
+          </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
