@@ -10,12 +10,13 @@ import z from 'zod'
 
 const createTransactionSchema = z.object({
   description: z.string().min(1, 'campo obrigatorio'),
-  price: z.string().min(1, 'campo obrigatorio'),
+  price: z.number({
+    required_error: 'campo obrigatorio',
+    invalid_type_error: 'use apenas números ou ponto para casas decimais',
+  }),
   category: z.string().min(1, 'campo obrigatorio'),
   transactionType: z.string().min(1, 'campo obrigatorio'),
 })
-
-// TODO RESET THE FORM AFTER CLOSE AND SUBMIT
 
 type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
 
@@ -28,15 +29,22 @@ export const Modal = () => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
+    reset,
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(createTransactionSchema),
   })
+
+  const clearForm = () => {
+    clearErrors()
+    reset()
+  }
 
   const onSubmit = handleSubmit((data) => console.log(data, errors))
 
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger onClick={clearForm} asChild>
         <button
           className="px-5 py-3 text-gray-personalized-white
             bg-green-default flex-center rounded-lg text-base font-bold"
@@ -87,7 +95,9 @@ export const Modal = () => {
                 className="p-4 bg-gray-personalized-gray1 w-full
                 text-gray-personalized-gray5 text-base font-normal rounded-lg     "
                 placeholder="Preço"
-                {...register('price')}
+                {...register('price', {
+                  valueAsNumber: true,
+                })}
               />
               {errors.price?.message && (
                 <span className="text-red-500">{errors.price.message}</span>
@@ -105,7 +115,7 @@ export const Modal = () => {
                 <span className="text-red-500">{errors.category.message}</span>
               )}
             </div>
-            <div className="flex gap-4 mt-2  mb-6  ">
+            <div className="flex flex-col gap-4 mt-2  mb-6  ">
               <div className="flex w-full gap-4">
                 <label className=" w-full  ">
                   <input
