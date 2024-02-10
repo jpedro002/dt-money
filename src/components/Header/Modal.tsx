@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import z from 'zod'
+import { useTransactions } from '@/contexts/transactionsContexts'
 
 const createTransactionSchema = z.object({
   description: z.string().min(1, 'campo obrigatorio'),
@@ -18,7 +19,7 @@ const createTransactionSchema = z.object({
   transactionType: z.string().min(1, 'campo obrigatorio'),
 })
 
-type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
+export type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
 
 export const Modal = () => {
   const [currentTransaction, setCurrentTransaction] = useState<
@@ -35,12 +36,17 @@ export const Modal = () => {
     resolver: zodResolver(createTransactionSchema),
   })
 
+  const { handleAddTransaction } = useTransactions()
+
   const clearForm = () => {
     clearErrors()
     reset()
+    setCurrentTransaction('')
   }
 
-  const onSubmit = handleSubmit((data) => console.log(data, errors))
+  const onSubmit = handleSubmit((data) => {
+    handleAddTransaction(data)
+  })
 
   return (
     <Dialog.Root>
