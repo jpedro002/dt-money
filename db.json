@@ -151,6 +151,18 @@
       "category": "fyurfyt",
       "transactionType": "entrada",
       "createdAt": "2024-02-10T21:15:53.552Z"
+    },
+    {
+      "id": "7892",
+      "description": "espetinho",
+      "price": 31.5,
+      "category": "diversos",
+      "transactionType": "saida",
+      "createdAt": "2024-02-11T18:58:08.099Z"
     }
-  ]
+  ],
+  "_sort": {
+    "field": "createdAt",
+    "order": "desc"
+  }
 }

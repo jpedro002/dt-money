@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "dev:server": "json-server db.json -p 3333 -w"
+    "dev:server": "json-server db.json -p 3333"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

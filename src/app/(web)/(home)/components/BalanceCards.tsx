@@ -1,5 +1,4 @@
 'use client'
-// export const dateFormatter = new Intl.DateTimeFormat('pt-BR')
 
 import { useTransactions } from '@/contexts/transactionsContexts'
 import { priceFormatter } from '@/utils/formatPrice'
@@ -13,8 +12,6 @@ export const BalanceCards = () => {
   const BALANCE = useMemo(() => {
     return transactions.reduce(
       (acc, crr) => {
-        console.log(crr.transactionType)
-
         if (crr.transactionType === 'entrada') {
           acc.entrada += crr.price
           acc.total += crr.price

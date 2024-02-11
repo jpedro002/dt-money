@@ -45,7 +45,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const getTransactions = async () => {
-    const response = await api('/transactions')
+    const response = await api(`/transactions`)
     const data = await response.json()
 
     setTransactions(data)
@@ -69,7 +69,11 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, handleAddTransaction, handleDeleteTransaction }}
+      value={{
+        transactions,
+        handleAddTransaction,
+        handleDeleteTransaction,
+      }}
     >
       {children}
     </TransactionsContext.Provider>
