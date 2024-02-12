@@ -21,10 +21,7 @@ export async function POST(req: NextRequest) {
     try {
       userSchema.parse(body)
     } catch (error) {
-      return NextResponse.json(
-        { message: 'Dados inválidos', error: error.errors },
-        { status: 400 },
-      )
+      return NextResponse.json({ message: 'Dados inválidos' }, { status: 400 })
     }
 
     return NextResponse.json(
