@@ -1,23 +1,15 @@
 'use client'
 
-import * as Dialog from '@radix-ui/react-Dialog'
-import { ArrowDownCircle, ArrowUpCircle, X } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import clsx from 'clsx'
-import z from 'zod'
 import { useTransactions } from '@/contexts/transactionsContexts'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createTransactionSchema } from '@/lib/validations'
+import z from 'zod'
 
-const createTransactionSchema = z.object({
-  description: z.string().min(1, 'campo obrigatorio'),
-  price: z.number({
-    required_error: 'campo obrigatorio',
-    invalid_type_error: 'use apenas números ou ponto para casas decimais',
-  }),
-  category: z.string().min(1, 'campo obrigatorio'),
-  transactionType: z.string().min(1, 'campo obrigatorio'),
-})
+import * as Dialog from '@radix-ui/react-Dialog'
+import { ArrowDownCircle, ArrowUpCircle, X } from 'lucide-react'
+import clsx from 'clsx'
 
 export type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
 
@@ -25,6 +17,8 @@ export const Modal = () => {
   const [currentTransaction, setCurrentTransaction] = useState<
     'entrada' | 'saida' | ''
   >('')
+
+  const { handleAddTransaction } = useTransactions()
 
   const {
     register,
@@ -36,15 +30,13 @@ export const Modal = () => {
     resolver: zodResolver(createTransactionSchema),
   })
 
-  const { handleAddTransaction } = useTransactions()
-
   const clearForm = () => {
     clearErrors()
     reset()
     setCurrentTransaction('')
   }
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     handleAddTransaction(data)
   })
 
