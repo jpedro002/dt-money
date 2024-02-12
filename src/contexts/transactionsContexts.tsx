@@ -19,6 +19,13 @@ interface Transaction extends NewTransactionFormInputs {
 interface TransactionsContextData {
   transactions: Transaction[]
   handleAddTransaction: (transactionInputs: NewTransactionFormInputs) => void
+  getTransactions: ({
+    query,
+    queryToFilter,
+  }: {
+    query?: string
+    queryToFilter: boolean
+  }) => void
 }
 
 const TransactionsContext = createContext({} as TransactionsContextData)
@@ -26,15 +33,32 @@ const TransactionsContext = createContext({} as TransactionsContextData)
 const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([])
 
-  const getTransactions = async () => {
-    const response = await api(`/transactions`)
-    const data = await response.json()
-
-    setTransactions(data)
+  const getTransactions = async ({
+    query,
+    queryToFilter,
+  }: {
+    query?: string
+    queryToFilter: boolean
+  }) => {
+    if (queryToFilter) {
+      const response = await api(`/transactions/${query}`).then((res) =>
+        res.json(),
+      )
+      console.log(response)
+      if (response.status !== 404 && response.data) {
+        return setTransactions(response.data)
+      } else return setTransactions([])
+    } else {
+      const response = await api('/transactions').then((res) => res.json())
+      console.log(response)
+      if (response.status !== 404 && response.data) {
+        return setTransactions(response.data)
+      } else return setTransactions([])
+    }
   }
 
   useEffect(() => {
-    getTransactions()
+    getTransactions({ query: '', queryToFilter: false })
   }, [])
 
   const handleAddTransaction = async (
@@ -59,6 +83,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       value={{
         transactions,
         handleAddTransaction,
+        getTransactions,
       }}
     >
       {children}

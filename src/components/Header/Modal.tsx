@@ -38,6 +38,7 @@ export const Modal = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     handleAddTransaction(data)
+    clearForm()
   })
 
   return (
