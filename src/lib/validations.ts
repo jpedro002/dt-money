@@ -15,3 +15,20 @@ export const userSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 })
+
+export const loginSchema = z.object({
+  email: z.string().min(1, 'campo obrigatorio').email('email inválido'),
+  password: z.string().min(0, 'campo obrigatorio'),
+})
+
+export const registerSchema = z
+  .object({
+    name: z.string().min(1, 'campo obrigatorio'),
+    email: z.string().min(1, 'campo obrigatorio').email('email inválido'),
+    password: z.string().min(1, 'campo obrigatorio'),
+    retypePassword: z.string().min(1, 'campo obrigatorio'),
+  })
+  .refine((data) => data.password === data.retypePassword, {
+    message: 'As senhas não coincidem',
+    path: ['retypePassword'],
+  })
