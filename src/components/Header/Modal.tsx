@@ -54,9 +54,9 @@ export const Modal = () => {
       <Dialog.Portal>
         <Dialog.Overlay className=" data-[state=open]:animate-overlayShow bg-black/75 fixed inset-0" />
         <Dialog.Content
-          className=" data-[state=open]:animate-contentShow fixed rounded-lg
-        top-[50%] left-[50%] translate-x-[-50%] min-w-[33.4375rem]
-        translate-y-[-50%] bg-gray-personalized-gray2 min-h-[33rem] px-12 pb-10 pt-12
+          className=" sm:data-[state=open]:animate-contentShow fixed rounded-lg bottom-0
+        sm:top-[50%] left-[50%] translate-x-[-50%] w-full sm:min-w-[33.4375rem]  sm:w-min
+        sm:translate-y-[-50%] bg-gray-personalized-gray2 min-h-[33rem] sm:px-12 px-6 md:pb-10  pt-6
         shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]
          focus:outline-none"
         >

@@ -31,7 +31,10 @@ export const BalanceCards = () => {
 
   return (
     <div className="max-w-[70rem] mx-auto flex flex-col">
-      <div className="flex gap-8 -mt-[4.5rem]  ">
+      <div
+        className="flex gap-8 -mt-[4.5rem] overflow-x-auto
+      [&::-webkit-scrollbar]:hidden px-4 lg:px-0  "
+      >
         <div
           className="flex flex-col pl-8 pr-6 py-6 bg-gray-personalized-gray4 rounded-lg
             min-w-[22rem]
