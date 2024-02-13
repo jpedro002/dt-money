@@ -28,7 +28,7 @@ export const GET = async (
     })
     if (seachedTransaction?.Transaction.length) {
       return NextResponse.json({
-        data: seachedTransaction,
+        data: seachedTransaction.Transaction,
         status: 200,
       })
     } else {

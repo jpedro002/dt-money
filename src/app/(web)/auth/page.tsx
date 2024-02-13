@@ -69,7 +69,7 @@ const LoginPage = () => {
         className="p-4 bg-green-light w-full text-white text-base font-normal rounded-lg
          shadow-md focus:outline-none focus:ring-2 focus:ring-green-light"
       >
-        login caralho
+        login
       </button>
       <Link href={'/auth/register'}>
         <span className="text-base text-white">Cadastre-se aqui</span>

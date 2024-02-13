@@ -41,18 +41,18 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     queryToFilter: boolean
   }) => {
     if (queryToFilter) {
-      const response = await api(`/transactions/${query}`).then((res) =>
-        res.json(),
-      )
-      console.log(response)
-      if (response.status !== 404 && response.data) {
-        return setTransactions(response.data)
+      const response = await api(`/transactions/${query}`)
+      const data = await response.json()
+
+      if (data.status !== 404 && data.data) {
+        return setTransactions(data.data)
       } else return setTransactions([])
     } else {
-      const response = await api(`/transactions`).then((res) => res.json())
-      console.log(response)
-      if (response.status !== 404 && response.data) {
-        return setTransactions(response.data)
+      const response = await api(`/transactions`)
+      const data = await response.json()
+
+      if (data.status !== 404 && data.data) {
+        return setTransactions(data.data)
       } else return setTransactions([])
     }
   }
@@ -65,7 +65,6 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     transactionInputs: NewTransactionFormInputs,
   ) => {
     const newTransaction = await createTransaction(transactionInputs)
-    console.log(newTransaction, 'newTransaction')
 
     if (newTransaction?.success && newTransaction.data) {
       return setTransactions((prevTransactions) => [
