@@ -4,8 +4,12 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import z from 'zod'
 import { registerSchema } from '@/lib/validations'
+import { createAccount } from '@/modules/auth/actions/authAction'
+import { useRouter } from 'next/navigation'
 
 type RegisterForm = z.infer<typeof registerSchema>
+
+// TODO:SHOW SERVER ERRORS
 
 const RegisterPage = () => {
   const {
@@ -16,8 +20,25 @@ const RegisterPage = () => {
     resolver: zodResolver(registerSchema),
   })
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
+  const router = useRouter()
+
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await createAccount(data)
+    if (res?.success) {
+      router.replace('/')
+    } else {
+      switch (res?.errorType) {
+        case 'email':
+          alert(res.errorMessage)
+          break
+        case 'server': {
+          alert(res.errorMessage)
+          break
+        }
+        default:
+          alert('Erro ao criar conta')
+      }
+    }
   })
 
   return (

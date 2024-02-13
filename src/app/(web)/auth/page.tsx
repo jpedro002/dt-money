@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema } from '@/lib/validations'
 import z from 'zod'
 import Link from 'next/link'
+import { login } from '@/modules/auth/actions/authAction'
+import { useRouter } from 'next/navigation'
 
 type Forminputs = z.infer<typeof loginSchema>
 
@@ -17,8 +19,21 @@ const LoginPage = () => {
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
+  const router = useRouter()
+
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await login(data)
+    if (res?.success) {
+      router.replace('/')
+    } else {
+      switch (res?.errorType) {
+        case 'email':
+          alert(res.errorMessage)
+          break
+        default:
+          alert('Erro ao criar conta')
+      }
+    }
   })
 
   return (

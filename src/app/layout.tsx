@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
-import { TransactionsProvider } from '@/contexts/transactionsContexts'
 
 const roboto = Roboto({
   display: 'swap',
@@ -21,9 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
-      <body className={roboto.className}>
-        <TransactionsProvider>{children}</TransactionsProvider>
-      </body>
+      <body className={roboto.className}>{children}</body>
     </html>
   )
 }

@@ -1,5 +1,6 @@
 import { Header } from '@/components/Header/Header'
 import { ReactNode } from 'react'
+import { TransactionsProvider } from '@/contexts/transactionsContexts'
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
   return (
@@ -8,8 +9,10 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
     grid-cols-1
     "
     >
-      <Header />
-      {children}
+      <TransactionsProvider>
+        <Header />
+        {children}
+      </TransactionsProvider>
     </div>
   )
 }

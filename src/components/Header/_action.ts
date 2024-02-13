@@ -16,6 +16,7 @@ export async function createTransaction(data: Inputs) {
         description: result.data.description,
         price: result.data.price,
         transactionType: result.data.transactionType,
+        userId: 'sdfasdfe-fqwefqweqwefwe',
       },
     })
 

@@ -1,0 +1,29 @@
+import AuthService from '@/modules/auth/actions/authService'
+import { NextRequest, NextResponse } from 'next/server'
+
+export const config = {
+  matcher: '/((?!_next/static|_next/image|favicon.ico).*)',
+}
+
+// const isAPIRoute = pathname.startsWith('/api')
+
+//     if (isAPIRoute) {
+//       return NextResponse.json({ message: 'Não autorizado' }, { status: 401 })
+//     }
+
+const publicRoutes = ['/auth', '/auth/register']
+
+export async function middleware(req: NextRequest) {
+  console.log(req.nextUrl)
+  const pathname = req.nextUrl.pathname
+  if (publicRoutes.includes(pathname)) {
+    return NextResponse.next()
+  }
+  const session = await AuthService.isSessionValid()
+  if (!session) {
+    return NextResponse.redirect(new URL('/auth', req.url))
+  } else if (pathname === '/auth' || pathname === '/auth/register') {
+    return NextResponse.redirect(new URL('/', req.url))
+  }
+  return NextResponse.next()
+}
