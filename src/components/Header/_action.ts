@@ -3,10 +3,14 @@
 import { z } from 'zod'
 import { createTransactionSchema } from '@/lib/validations'
 import { prisma } from '@/lib/prisma'
+import AuthService from '@/modules/auth/actions/authService'
+import { cookies } from 'next/headers'
 
-type Inputs = z.infer<typeof createTransactionSchema>
+type FormInputs = z.infer<typeof createTransactionSchema>
 
-export async function createTransaction(data: Inputs) {
+export async function createTransaction(data: FormInputs) {
+  const session = cookies().get('session')
+  const decodeJWT = await AuthService.openSessionToken(session?.value as string)
   const result = createTransactionSchema.safeParse(data)
 
   if (result.success) {
@@ -16,7 +20,7 @@ export async function createTransaction(data: Inputs) {
         description: result.data.description,
         price: result.data.price,
         transactionType: result.data.transactionType,
-        userId: 'sdfasdfe-fqwefqweqwefwe',
+        userId: decodeJWT.sub as string,
       },
     })
 

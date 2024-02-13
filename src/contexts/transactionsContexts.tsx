@@ -49,7 +49,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         return setTransactions(response.data)
       } else return setTransactions([])
     } else {
-      const response = await api('/transactions').then((res) => res.json())
+      const response = await api(`/transactions`).then((res) => res.json())
       console.log(response)
       if (response.status !== 404 && response.data) {
         return setTransactions(response.data)
@@ -65,7 +65,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     transactionInputs: NewTransactionFormInputs,
   ) => {
     const newTransaction = await createTransaction(transactionInputs)
-    console.log(newTransaction)
+    console.log(newTransaction, 'newTransaction')
 
     if (newTransaction?.success && newTransaction.data) {
       return setTransactions((prevTransactions) => [
