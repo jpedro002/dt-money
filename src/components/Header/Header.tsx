@@ -13,7 +13,7 @@ export function Header() {
             DT Money
           </h2>
         </div>
-        <Modal />
+        {/* <Modal /> */}
       </div>
     </header>
   )
