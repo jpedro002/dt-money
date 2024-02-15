@@ -1,5 +1,7 @@
+import { ENV } from '@/env'
+
 export const api = (path: string, unit?: RequestInit) => {
-  const baseUrl = 'http://localhost:3000'
+  const baseUrl = ENV.NEXT_PUBLIC_API_URL
   const apiPrefix = '/api'
   const url = new URL(apiPrefix.concat(path), baseUrl)
 
