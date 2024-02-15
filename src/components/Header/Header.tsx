@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Modal } from './Modal'
+// import { Modal } from './Modal'
 
 // TODO: quando voltar para componetizar o button, adcionar hover e active
 
