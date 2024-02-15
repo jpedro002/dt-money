@@ -4,14 +4,14 @@
 // import { useForm } from 'react-hook-form'
 // import { useTransactions } from '@/contexts/transactionsContexts'
 // import { zodResolver } from '@hookform/resolvers/zod'
-// import { createTransactionSchema } from '@/lib/validations'
-// import z from 'zod'
+import { createTransactionSchema } from '@/lib/validations'
+import z from 'zod'
 
 // import * as Dialog from '@radix-ui/react-Dialog'
 // import { ArrowDownCircle, ArrowUpCircle, X } from 'lucide-react'
 // import clsx from 'clsx'
 
-// export type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
+export type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
 
 // export const Modal = () => {
 //   const [currentTransaction, setCurrentTransaction] = useState<
