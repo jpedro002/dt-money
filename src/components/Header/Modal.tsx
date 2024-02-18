@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { createTransactionSchema } from '@/lib/validations'
 import z from 'zod'
 
-import * as Dialog from '@radix-ui/react-Dialog'
+import * as Dialog from './index'
 import { ArrowDownCircle, ArrowUpCircle, X } from 'lucide-react'
 import clsx from 'clsx'
 
