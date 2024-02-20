@@ -67,7 +67,8 @@ const DeleteTransaction = ({ id }: { id: string }) => {
 }
 
 export const TransactionsList = () => {
-  const { transactions } = useTransactions()
+  const { transactions, setTransactionToEdit, changeModalState } =
+    useTransactions()
   const dateFormatter = new Intl.DateTimeFormat('pt-BR')
 
   return (
@@ -111,6 +112,10 @@ export const TransactionsList = () => {
               </div>
               <div className="flex justify-around gap-1">
                 <button
+                  onClick={() => {
+                    changeModalState()
+                    setTransactionToEdit(transaction)
+                  }}
                   className="text-gray-personalized-gray5 p-2 rounded-lg border border-transparent
                  hover:text-gray-personalized-gray6 hover:border-gray-personalized-gray6
                  transition-colors duration-300 ease-in-out
