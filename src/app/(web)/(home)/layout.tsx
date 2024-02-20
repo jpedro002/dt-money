@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header/Header'
 import { ReactNode } from 'react'
 import { TransactionsProvider } from '@/contexts/transactionsContexts'
+import { Toaster } from 'sonner'
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export default function DefaultLayout({ children }: { children: ReactNode }) {
       <TransactionsProvider>
         <Header />
         {children}
+        <Toaster richColors />
       </TransactionsProvider>
     </div>
   )
