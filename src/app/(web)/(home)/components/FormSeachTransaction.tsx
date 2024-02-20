@@ -7,11 +7,13 @@ import { useState } from 'react'
 export const FormSeachTransaction = () => {
   const [query, setQuery] = useState('')
 
-  const { getTransactions, transactions } = useTransactions()
+  const { transactions, getTransactionsByQueryCtx } = useTransactions()
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    getTransactions({ query: query.trim(), queryToFilter: true })
+    if (query.trim()) {
+      getTransactionsByQueryCtx(query)
+    } else getTransactionsByQueryCtx('')
   }
 
   return (
