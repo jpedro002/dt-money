@@ -1,16 +1,18 @@
+'use server'
+
 import { prisma } from '@/lib/prisma'
-import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
 import * as jose from 'jose'
 
-export const GET = async (
-  _: Request,
-  { params }: { params: { slug: string } },
-) => {
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
+
+export const getTransactionsByQuery = async (query: string) => {
   const crrJWT = cookies().get('session')
   if (crrJWT) {
     const secret = new TextEncoder().encode(process.env.AUTH_SECRET)
+
     const { payload } = await jose.jwtVerify(crrJWT.value, secret)
+
     const seachedTransaction = await prisma.user.findUnique({
       where: { id: payload.sub },
       include: {
@@ -20,19 +22,20 @@ export const GET = async (
           },
           where: {
             description: {
-              startsWith: params.slug,
+              startsWith: query,
             },
           },
         },
       },
     })
+
     if (seachedTransaction?.Transaction.length) {
-      return NextResponse.json({
+      return {
         data: seachedTransaction.Transaction,
         status: 200,
-      })
+      }
     } else {
-      return NextResponse.json({ data: 'Not found', status: 404 })
+      return { data: [], status: 404 }
     }
   }
 }

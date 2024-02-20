@@ -3,6 +3,7 @@
 import { NewTransactionFormInputs } from '@/components/Header/Modal'
 import { createTransaction } from '@/modules/transaction-crud/createTransaction'
 import { deleteTransaction } from '@/modules/transaction-crud/deleteTransaction'
+import { getTransactionsByQuery } from '@/modules/transaction-crud/readTransactions'
 import { updateTransaction } from '@/modules/transaction-crud/updateTransaction'
 import { api } from '@/services/api'
 import {
@@ -22,13 +23,7 @@ export interface Transaction extends NewTransactionFormInputs {
 interface TransactionsContextData {
   transactions: Transaction[]
   handleAddTransaction: (transactionInputs: NewTransactionFormInputs) => void
-  getTransactions: ({
-    query,
-    queryToFilter,
-  }: {
-    query?: string
-    queryToFilter: boolean
-  }) => void
+  getTransactionsByQueryCtx: (query: string) => Promise<string | number | void>
   handleDeleteTransaction: (id: string) => void
   modalIsOpen: boolean
   changeModalState: () => void
@@ -47,32 +42,25 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [itemToEdit, setItemToEdit] = useState<Transaction | null>(null)
 
-  const getTransactions = async ({
-    query,
-    queryToFilter,
-  }: {
-    query?: string
-    queryToFilter: boolean
-  }) => {
-    if (queryToFilter) {
-      const response = await api(`/transactions/${query}`)
-      const data = await response.json()
+  const getTransactionsByQueryCtx = async (query: string) => {
+    const response = await getTransactionsByQuery(query)
 
-      if (data.status !== 404 && data.data) {
-        return setTransactions(data.data)
-      } else return setTransactions([])
+    if (response?.status === 200 && response?.data.length > 0) {
+      return setTransactions(
+        response.data.map((transaction) => {
+          return {
+            ...transaction,
+            createdAt: transaction.createdAt.toString(),
+          }
+        }),
+      )
     } else {
-      const response = await api(`/transactions`)
-      const data = await response.json()
-
-      if (data.status !== 404 && data.data) {
-        return setTransactions(data.data)
-      } else return setTransactions([])
+      return toast.error('No transactions found with this query')
     }
   }
 
   useEffect(() => {
-    getTransactions({ query: '', queryToFilter: false })
+    getTransactionsByQueryCtx('')
   }, [])
 
   const handleAddTransaction = async (
@@ -142,13 +130,13 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
       value={{
         transactions,
         handleAddTransaction,
-        getTransactions,
         handleDeleteTransaction,
         modalIsOpen,
         changeModalState,
         itemToEdit,
         setTransactionToEdit,
         handleUpdateTransaction,
+        getTransactionsByQueryCtx,
       }}
     >
       {children}
