@@ -13,7 +13,7 @@ import clsx from 'clsx'
 
 export type NewTransactionFormInputs = z.infer<typeof createTransactionSchema>
 
-export const Modal = () => {
+export const ModalCreateTransaction = () => {
   const {
     handleAddTransaction,
     modalIsOpen,

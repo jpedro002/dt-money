@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Modal } from './Modal'
+import { ModalCreateTransaction } from './ModalCreateTransaction'
 
 // TODO: quando voltar para componetizar o button, adcionar hover e active
 
@@ -13,7 +13,7 @@ export function Header() {
             DT Money
           </h2>
         </div>
-        <Modal />
+        <ModalCreateTransaction />
       </div>
     </header>
   )

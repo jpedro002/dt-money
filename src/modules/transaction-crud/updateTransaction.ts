@@ -1,6 +1,6 @@
 'use server'
 
-import { NewTransactionFormInputs } from '@/components/Header/Modal'
+import { NewTransactionFormInputs } from '@/components/Header/ModalCreateTransaction'
 import { prisma } from '@/lib/prisma'
 
 export const updateTransaction = async (

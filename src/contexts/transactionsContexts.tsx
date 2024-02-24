@@ -1,6 +1,6 @@
 'use client'
 
-import { NewTransactionFormInputs } from '@/components/Header/Modal'
+import { NewTransactionFormInputs } from '@/components/Header/ModalCreateTransaction'
 import { createTransaction } from '@/modules/transaction-crud/createTransaction'
 import { deleteTransaction } from '@/modules/transaction-crud/deleteTransaction'
 import { getTransactionsByQuery } from '@/modules/transaction-crud/readTransactions'
