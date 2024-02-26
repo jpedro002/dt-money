@@ -83,9 +83,6 @@ test('handles adding a transaction', () => {
   const form = getByTestId('form')
   fireEvent.submit(form)
 
-  console.log(handleSubmit.mock.calls)
-  console.log(onSubmit.mock.calls)
-
   // expect(handleSubmit).toHaveBeenCalledWith({
   //   description: 'Test transaction',
   //   price: 10,
