@@ -25,11 +25,7 @@ const renderBalanceCards = (transactions: Transaction[]) => {
 
 describe('FormSeachTransaction', () => {
   test('renders the form correctly', () => {
-    const { getByLabelText, getByPlaceholderText, debug } = renderBalanceCards(
-      [],
-    )
-
-    debug()
+    const { getByLabelText, getByPlaceholderText } = renderBalanceCards([])
 
     expect(getByLabelText('Transações')).toBeInTheDocument()
     expect(getByPlaceholderText('Busque uma transação')).toBeInTheDocument()

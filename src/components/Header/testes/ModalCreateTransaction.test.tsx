@@ -49,7 +49,7 @@ test('handles adding a transaction', () => {
   const handleSubmit = vi.fn((data) => console.log(data))
   const onSubmit = vi.fn(handleSubmit)
 
-  const { debug, getByText, getByPlaceholderText, getByTestId } = render(
+  const { getByText, getByPlaceholderText, getByTestId } = render(
     <TransactionsContext.Provider
       value={
         {
@@ -64,8 +64,6 @@ test('handles adding a transaction', () => {
       <ModalCreateTransaction />
     </TransactionsContext.Provider>,
   )
-
-  debug()
 
   const amountInput = getByPlaceholderText('Preço')
   fireEvent.change(amountInput, { target: { value: '10' } })
