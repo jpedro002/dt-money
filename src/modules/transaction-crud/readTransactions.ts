@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma'
 import * as jose from 'jose'
 
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
 
 export const getTransactionsByQuery = async (query: string) => {
   const crrJWT = cookies().get('session')

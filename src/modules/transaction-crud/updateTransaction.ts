@@ -10,7 +10,7 @@ export const updateTransaction = async (
   try {
     const updatedTransaction = await prisma.transaction.update({
       where: {
-        id: id,
+        id,
       },
       data: {
         category: inputs.category,

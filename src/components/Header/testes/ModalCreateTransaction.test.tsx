@@ -65,6 +65,8 @@ test('handles adding a transaction', () => {
     </TransactionsContext.Provider>,
   )
 
+  debug()
+
   const amountInput = getByPlaceholderText('Preço')
   fireEvent.change(amountInput, { target: { value: '10' } })
 
@@ -81,7 +83,9 @@ test('handles adding a transaction', () => {
   fireEvent.click(submitButton)
 
   const form = getByTestId('form')
-  fireEvent.submit(form), console.log(handleSubmit.mock.calls)
+  fireEvent.submit(form)
+
+  console.log(handleSubmit.mock.calls)
   console.log(onSubmit.mock.calls)
 
   // expect(handleSubmit).toHaveBeenCalledWith({
