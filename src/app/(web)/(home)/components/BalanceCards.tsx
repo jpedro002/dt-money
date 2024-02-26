@@ -47,7 +47,10 @@ export const BalanceCards = () => {
               </span>
               <ArrowUpCircle className="text-green-light " />
             </div>
-            <strong className="text-gray-personalized-white text-[2rem] mt-3  ">
+            <strong
+              data-testid="balance-entrada"
+              className="text-gray-personalized-white text-[2rem] mt-3  "
+            >
               {priceFormatter.format(BALANCE.entrada)}
             </strong>
           </div>
@@ -64,7 +67,10 @@ export const BalanceCards = () => {
               </span>
               <ArrowDownCircle className="text-red-dark" />
             </div>
-            <strong className="text-gray-personalized-white text-[2rem] mt-3  ">
+            <strong
+              data-testid="balance-saida"
+              className="text-gray-personalized-white text-[2rem] mt-3  "
+            >
               {priceFormatter.format(BALANCE.saida)}
             </strong>
           </div>
@@ -83,7 +89,10 @@ export const BalanceCards = () => {
               </span>
               <DollarSign className="text-white" />
             </div>
-            <strong className="text-gray-personalized-white text-[2rem] mt-3  ">
+            <strong
+              data-testid="balance-total"
+              className="text-gray-personalized-white text-[2rem] mt-3  "
+            >
               {priceFormatter.format(BALANCE.total)}
             </strong>
           </div>
