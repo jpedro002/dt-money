@@ -20,7 +20,7 @@ export interface Transaction extends NewTransactionFormInputs {
   createdAt: string
 }
 
-interface TransactionsContextData {
+export interface TransactionsContextData {
   transactions: Transaction[]
   handleAddTransaction: (transactionInputs: NewTransactionFormInputs) => void
   getTransactionsByQueryCtx: (query: string) => Promise<string | number | void>
@@ -35,7 +35,7 @@ interface TransactionsContextData {
   ) => void
 }
 
-const TransactionsContext = createContext({} as TransactionsContextData)
+export const TransactionsContext = createContext({} as TransactionsContextData)
 
 const TransactionsProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([])

@@ -1,59 +1,93 @@
-import { render, fireEvent } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { ModalCreateTransaction } from '../ModalCreateTransaction'
-import { TransactionsProvider } from '@/contexts/transactionsContexts'
+import {
+  TransactionsContext,
+  TransactionsContextData,
+} from '@/contexts/transactionsContexts'
+
+const handleAddTransaction = vi.fn()
+const modalIsOpen = false
+const changeModalState = vi.fn()
+const itemToEdit = null
+const handleUpdateTransaction = vi.fn()
+
+const renderComponent = () => {
+  return render(
+    <TransactionsContext.Provider
+      value={
+        {
+          handleAddTransaction,
+          modalIsOpen,
+          changeModalState,
+          itemToEdit,
+          handleUpdateTransaction,
+        } as unknown as TransactionsContextData
+      }
+    >
+      <ModalCreateTransaction />
+    </TransactionsContext.Provider>,
+  )
+}
 
 test('renders a message', () => {
-  const { getByText } = render(
-    <TransactionsProvider>
-      <ModalCreateTransaction />
-    </TransactionsProvider>,
-  )
-  expect(getByText('Hello, world!')).toBeInTheDocument()
+  const { getByText } = renderComponent()
+
+  expect(getByText('Nova transação')).toBeInTheDocument()
+})
+
+test('open modal when button is clicked', () => {
+  const { getByText } = renderComponent()
+
+  const button = getByText('Nova transação')
+  fireEvent.click(button)
+
+  expect(changeModalState).toHaveBeenCalled()
 })
 
 test('handles adding a transaction', () => {
-  const { getByLabelText, getByText } = render(
-    <TransactionsProvider>
+  const handleSubmit = vi.fn((data) => console.log(data))
+  const onSubmit = vi.fn(handleSubmit)
+
+  const { debug, getByText, getByPlaceholderText, getByTestId } = render(
+    <TransactionsContext.Provider
+      value={
+        {
+          handleAddTransaction,
+          modalIsOpen: true,
+          changeModalState,
+          itemToEdit,
+          handleUpdateTransaction,
+        } as unknown as TransactionsContextData
+      }
+    >
       <ModalCreateTransaction />
-    </TransactionsProvider>,
+    </TransactionsContext.Provider>,
   )
 
-  // Simulate user input
-  const amountInput = getByLabelText('Amount')
+  const amountInput = getByPlaceholderText('Preço')
   fireEvent.change(amountInput, { target: { value: '10' } })
 
-  const descriptionInput = getByLabelText('Description')
+  const descriptionInput = getByPlaceholderText('Descrição')
   fireEvent.change(descriptionInput, { target: { value: 'Test transaction' } })
 
-  // Simulate button click
-  const addButton = getByText('Add Transaction')
-  fireEvent.click(addButton)
+  const categoryInput = getByPlaceholderText('Categoria')
+  fireEvent.change(categoryInput, { target: { value: 'Test category' } })
 
-  // Assert that the transaction was added
-  // You can add your own assertions here based on your implementation
-})
+  const buttonIncome = getByText('Entrada')
+  fireEvent.click(buttonIncome)
 
-test('handles updating a transaction', () => {
-  const { getByLabelText, getByText } = render(
-    <TransactionsProvider>
-      <ModalCreateTransaction />
-    </TransactionsProvider>,
-  )
+  const submitButton = getByText('Cadastrar')
+  fireEvent.click(submitButton)
 
-  // Simulate user input
-  const amountInput = getByLabelText('Amount')
-  fireEvent.change(amountInput, { target: { value: '20' } })
+  const form = getByTestId('form')
+  fireEvent.submit(form), console.log(handleSubmit.mock.calls)
+  console.log(onSubmit.mock.calls)
 
-  const descriptionInput = getByLabelText('Description')
-  fireEvent.change(descriptionInput, {
-    target: { value: 'Updated transaction' },
-  })
-
-  // Simulate button click
-  const updateButton = getByText('Update Transaction')
-  fireEvent.click(updateButton)
-
-  // Assert that the transaction was updated
-  // You can add your own assertions here based on your implementation
+  // expect(handleSubmit).toHaveBeenCalledWith({
+  //   description: 'Test transaction',
+  //   price: 10,
+  //   category: 'Test category',
+  //   transactionType: 'entrada',
+  // })
 })

@@ -99,7 +99,11 @@ export const ModalCreateTransaction = () => {
           <Dialog.Title className="text-gray-personalized-gray7 mb-8 text-2xl font-bold">
             Nova transação
           </Dialog.Title>
-          <form onSubmit={onSubmit} className="flex flex-col gap-4 ">
+          <form
+            onSubmit={onSubmit}
+            data-testid="form"
+            className="flex flex-col gap-4 "
+          >
             <div className="flex flex-col space-y-4">
               <input
                 type="text"
@@ -219,6 +223,7 @@ export const ModalCreateTransaction = () => {
             </div>
 
             <button
+              type="submit"
               className="bg-green-default flex-center leading-none
             focus:shadow-[0_0_0_2px] focus:outline-none  w-full px-8 py-4
             text-base text-white rounded-lg
