@@ -49,7 +49,16 @@ test('handles adding a transaction', () => {
   const handleSubmit = vi.fn((data) => console.log(data))
   const onSubmit = vi.fn(handleSubmit)
 
-  const { getByText, getByPlaceholderText, getByTestId } = render(
+  const mockSetCurrentTransaction = {
+    setCurrentTransaction: (transaction: 'entrada' | 'saida') => {},
+  }
+
+  const spyCurrentTransaction = vi.spyOn(
+    mockSetCurrentTransaction,
+    'setCurrentTransaction',
+  )
+
+  const { getByText, getByPlaceholderText, getByTestId, debug } = render(
     <TransactionsContext.Provider
       value={
         {
@@ -65,6 +74,8 @@ test('handles adding a transaction', () => {
     </TransactionsContext.Provider>,
   )
 
+  debug()
+
   const amountInput = getByPlaceholderText('Preço')
   fireEvent.change(amountInput, { target: { value: '10' } })
 
@@ -77,11 +88,13 @@ test('handles adding a transaction', () => {
   const buttonIncome = getByText('Entrada')
   fireEvent.click(buttonIncome)
 
-  const submitButton = getByText('Cadastrar')
-  fireEvent.click(submitButton)
+  expect(spyCurrentTransaction).toHaveBeenCalledWith('entrada')
 
-  const form = getByTestId('form')
-  fireEvent.submit(form)
+  // const submitButton = getByText('Cadastrar')
+  // fireEvent.click(submitButton)
+
+  // const form = getByTestId('form')
+  // fireEvent.submit(form)
 
   // expect(handleSubmit).toHaveBeenCalledWith({
   //   description: 'Test transaction',

@@ -31,9 +31,8 @@ test('renders the delete button and test open change', () => {
 })
 
 test('calls handleDeleteTransaction when delete button is clicked', () => {
-  const { getByTestId, debug } = renderDeleteTransactionButton('1')
+  const { getByTestId } = renderDeleteTransactionButton('1')
 
-  debug()
   const deleteButtonTrigger = getByTestId('delete-button-trigger')
   fireEvent.click(deleteButtonTrigger)
 
