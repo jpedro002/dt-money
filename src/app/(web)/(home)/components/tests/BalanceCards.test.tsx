@@ -56,11 +56,15 @@ test('calculates balance correctly for transactions with entrada', () => {
 })
 
 test('calculates balance correctly for empty transactions', () => {
-  const { getByTestId } = renderBalanceCards([])
+  const { getByTestId, debug } = renderBalanceCards([])
 
-  // TODO - fix this test
+  debug()
 
-  // expect(getByTestId('balance-entrada').textContent).toEqual('R$ 0,00')
-  // expect(getByTestId('balance-saida').textContent).toEqual('R$ 0,00')
-  // expect(getByTestId('balance-total').textContent).toEqual('R$ 0,00')
+  const balanceEntrada = getByTestId('balance-entrada')
+  const balanceSaida = getByTestId('balance-saida')
+  const balanceTotal = getByTestId('balance-total')
+
+  expect(balanceEntrada).toHaveTextContent('R$ 0,00')
+  expect(balanceSaida).toHaveTextContent('R$ 0,00')
+  expect(balanceTotal).toHaveTextContent('R$ 0,00')
 })
