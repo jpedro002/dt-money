@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, getByTestId } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { DeleteTransactionButton } from '../DeleteTransactionButton'
 import {
   TransactionsContext,

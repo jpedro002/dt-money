@@ -46,19 +46,16 @@ test('open modal when button is clicked', () => {
 })
 
 test('handles adding a transaction', () => {
-  const handleSubmit = vi.fn((data) => console.log(data))
-  const onSubmit = vi.fn(handleSubmit)
+  // const mockSetCurrentTransaction = {
+  //   setCurrentTransaction: (transaction: 'entrada' | 'saida') => {},
+  // }
 
-  const mockSetCurrentTransaction = {
-    setCurrentTransaction: (transaction: 'entrada' | 'saida') => {},
-  }
+  // const spyCurrentTransaction = vi.spyOn(
+  //   mockSetCurrentTransaction,
+  //   'setCurrentTransaction',
+  // )
 
-  const spyCurrentTransaction = vi.spyOn(
-    mockSetCurrentTransaction,
-    'setCurrentTransaction',
-  )
-
-  const { getByText, getByPlaceholderText, getByTestId, debug } = render(
+  const { getByText, getByPlaceholderText } = render(
     <TransactionsContext.Provider
       value={
         {

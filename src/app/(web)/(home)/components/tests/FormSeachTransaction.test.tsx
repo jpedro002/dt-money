@@ -43,8 +43,7 @@ describe('FormSeachTransaction', () => {
   })
 
   test('calls getTransactionsByQueryCtx with an empty query', () => {
-    const { getByLabelText, getByRole } = renderBalanceCards([])
-    const searchInput = getByLabelText('Transações')
+    const { getByRole } = renderBalanceCards([])
     const searchButton = getByRole('button')
 
     fireEvent.click(searchButton)

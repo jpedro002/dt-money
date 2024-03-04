@@ -3,7 +3,7 @@
 import { useTransactions } from '@/contexts/transactionsContexts'
 import { priceFormatter } from '@/utils/formatPrice'
 import clsx from 'clsx'
-import { ArrowBigRight, CalendarDays, Pen, Trash } from 'lucide-react'
+import { ArrowBigRight, CalendarDays, Pen } from 'lucide-react'
 import { DeleteTransactionButton } from './DeleteTransactionButton'
 
 export const TransactionsList = () => {
