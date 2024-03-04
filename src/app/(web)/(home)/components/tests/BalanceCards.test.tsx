@@ -56,9 +56,7 @@ test('calculates balance correctly for transactions with entrada', () => {
 })
 
 test('calculates balance correctly for empty transactions', () => {
-  const { getByTestId, debug } = renderBalanceCards([])
-
-  debug()
+  const { getByTestId } = renderBalanceCards([])
 
   const balanceEntrada = getByTestId('balance-entrada')
   const balanceSaida = getByTestId('balance-saida')
