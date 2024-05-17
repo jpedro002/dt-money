@@ -55,7 +55,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         }),
       )
     } else {
-      return toast.error('No transactions found with this query')
+      return toast.error('Não foi possível carregar as transações')
     }
   }
 
@@ -69,7 +69,7 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
     const newTransaction = await createTransaction(transactionInputs)
 
     if (newTransaction?.success && newTransaction.data) {
-      toast.success('Event has been created')
+      toast.success('Criado com sucesso')
 
       return setTransactions((prevTransactions) => [
         ...prevTransactions,
@@ -79,19 +79,19 @@ const TransactionsProvider = ({ children }: { children: ReactNode }) => {
         },
       ])
     } else {
-      toast.error('not possible to create this event')
+      toast.error('Erro ao criar')
     }
   }
 
   const handleDeleteTransaction = async (id: string) => {
     const response = await deleteTransaction(id)
     if (response.success) {
-      toast.success('Event has been created')
+      toast.success('Deletado com sucesso')
       return setTransactions((prevTransactions) =>
         prevTransactions.filter((transaction) => transaction.id !== id),
       )
     } else {
-      toast.error('not possible to delete this event')
+      toast.error('Erro ao deletar')
     }
   }
 

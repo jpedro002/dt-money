@@ -7,6 +7,7 @@ import z from 'zod'
 import Link from 'next/link'
 import { login } from '@/modules/auth/actions/authAction'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 type Forminputs = z.infer<typeof loginSchema>
 
@@ -28,10 +29,10 @@ const LoginPage = () => {
     } else {
       switch (res?.errorType) {
         case 'email':
-          alert(res.errorMessage)
+          toast.error(res.errorMessage)
           break
         default:
-          alert('Erro ao criar conta')
+          toast.error('Erro ao criar conta')
       }
     }
   })

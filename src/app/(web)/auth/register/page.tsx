@@ -6,6 +6,7 @@ import z from 'zod'
 import { registerSchema } from '@/lib/validations'
 import { createAccount } from '@/modules/auth/actions/authAction'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 type RegisterForm = z.infer<typeof registerSchema>
 
@@ -29,14 +30,14 @@ const RegisterPage = () => {
     } else {
       switch (res?.errorType) {
         case 'email':
-          alert(res.errorMessage)
+          toast.error(res.errorMessage)
           break
         case 'server': {
-          alert(res.errorMessage)
+          toast.error(res.errorMessage)
           break
         }
         default:
-          alert('Erro ao criar conta')
+          toast.error('Erro ao criar conta')
       }
     }
   })

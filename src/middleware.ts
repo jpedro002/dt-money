@@ -14,10 +14,6 @@ export async function middleware(req: NextRequest) {
 
   const isAPIRoute = pathname.startsWith('/api')
 
-  if (publicRoutes.includes(pathname)) {
-    return NextResponse.next()
-  }
-
   if (!session) {
     if (isAPIRoute) {
       return NextResponse.json({ message: 'Não autorizado' }, { status: 401 })
