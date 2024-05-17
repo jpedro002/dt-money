@@ -5,7 +5,6 @@ import { createTransaction } from '@/modules/transaction-crud/createTransaction'
 import { deleteTransaction } from '@/modules/transaction-crud/deleteTransaction'
 import { getTransactionsByQuery } from '@/modules/transaction-crud/readTransactions'
 import { updateTransaction } from '@/modules/transaction-crud/updateTransaction'
-import { api } from '@/services/api'
 import {
   ReactNode,
   createContext,

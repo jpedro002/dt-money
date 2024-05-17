@@ -13,7 +13,7 @@ export function Header() {
             DT Money
           </h2>
         </div>
-        <button>logout</button>
+        <button className="">logout</button>
         <Modal />
       </div>
     </header>

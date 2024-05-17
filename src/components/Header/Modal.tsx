@@ -28,7 +28,7 @@ export const Modal = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, defaultValues },
+    formState: { errors },
     clearErrors,
     reset,
     setValue,
@@ -56,7 +56,7 @@ export const Modal = () => {
       setValue('category', itemToEdit.category || '')
       setValue('transactionType', itemToEdit.transactionType || '')
     }
-  }, [itemToEdit])
+  }, [itemToEdit, setValue])
 
   const onSubmit = handleSubmit(async (data) => {
     if (itemToEdit) {
