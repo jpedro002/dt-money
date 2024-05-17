@@ -78,7 +78,7 @@ export const TransactionsList = () => {
           <li
             key={transaction.id}
             className="bg-gray-personalized-gray3
-            min-w-[326px] w-full  flex flex-row justify-between p-5 rounded-lg
+             w-full  flex flex-row justify-between p-5 rounded-lg
 
               "
           >
@@ -88,7 +88,7 @@ export const TransactionsList = () => {
               </span>
               <span
                 className={clsx(
-                  `min-w-[11.5rem] text-base font-bold `,
+                  `md:min-w-[11.5rem] text-base font-bold `,
                   transaction.transactionType === 'entrada'
                     ? ' text-green-light'
                     : 'text-red-default',

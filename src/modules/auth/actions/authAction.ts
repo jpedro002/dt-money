@@ -109,4 +109,8 @@ async function login(
   }
 }
 
-export { createAccount, login }
+async function logOut() {
+  AuthService.destroySession()
+}
+
+export { createAccount, login, logOut }
